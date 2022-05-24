@@ -4,6 +4,7 @@ export const searchFilter = (search, addresses) => {
       x.name.toLowerCase().includes(search) ||
       x.surname.toLowerCase().includes(search) ||
       x.phoneNumber.toLowerCase().includes(search) ||
-      x.city.toLowerCase().includes(search)
+      x.city.toLowerCase().includes(search) ||
+      x.gender.toLowerCase().includes(search)
   );
 };

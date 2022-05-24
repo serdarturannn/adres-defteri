@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ListComponent from "../../components/ListComponent/ListComponent";
 import NavbarComponent from "../../components/NavbarComponent/NavbarComponent";
+import NewAddress from "../../components/NewAddress/NewAddress";
 import { data } from "../../data/data";
 import { searchFilter } from "../../filter";
 
@@ -13,9 +14,9 @@ const HomePage = () => {
     <div>
       <NavbarComponent setListShow={setListShow} setSearch={setSearch} />
       {listShow == true ? (
-        <ListComponent addresses={searchFilter(search, addresses)} />
+        <ListComponent setAddresses={setAddresses} addresses={searchFilter(search, addresses)} />
       ) : (
-        <div>Yeni Ekle</div>
+        <NewAddress setAddresses={setAddresses} addresses={addresses} setListShow={setListShow}/>
       )}
     </div>
   );
