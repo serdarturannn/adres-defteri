@@ -187,7 +187,9 @@ const Update = (props) => {
           <Form.Group className="mb-3 ">
             <Form.Label>BirthDay</Form.Label>
             <Form.Control
-              value={updatedAddress.birthDay || ""}
+              value={
+                new Date(updatedAddress.birthDay)?.toJSON()?.substring(0, 10) || ""
+              }
               onChange={(e) => onChangeInput(e)}
               name="birthDay"
               type="date"
