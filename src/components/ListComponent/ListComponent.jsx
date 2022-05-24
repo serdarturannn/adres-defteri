@@ -30,7 +30,10 @@ const ListComponent = (props) => {
       <Update
         setShowEdit={setShowEdit}
         showEdit={showEdit}
+        onDeleteClick={() => onDeleteClick(clickedAddress)}
         address={clickedAddress}
+        addresses={addresses}
+        setAddresses={setAddresses}
       />
       <Detail
         setShowDetail={setShowDetail}

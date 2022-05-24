@@ -23,7 +23,7 @@ const Detail = (props) => {
         <p>Instagram: {address?.instagram}</p>
         <p>Facebook: {address?.facebook}</p>
         <p>SnapChat: {address?.snapChat}</p>
-        <p>BirthDay: {address?.birthDay}</p>
+        <p>BirthDay: {new Date(address?.birthDay).toLocaleDateString()}</p>
       </Modal.Body>
     </Modal>
   );

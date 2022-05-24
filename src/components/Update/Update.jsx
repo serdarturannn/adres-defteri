@@ -1,31 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
 const Update = (props) => {
-  const { showEdit, setShowEdit, address, handleDelete, handleSave } = props;
+  const {
+    showEdit,
+    setShowEdit,
+    addresses,
+    setAddresses,
+    address,
+    onDeleteClick,
+  } = props;
 
-  const [updatedAddress, setUpdatedAddress] = useState({
-    id: address?.id,
-    name: address?.name,
-    surname: address?.surname,
-    gender: address?.gender,
-    email: address?.email,
-    phoneNumber: address?.phoneNumber,
-    homePhone: address?.homePhone,
-    workPhone: address?.workPhone,
-    city: address?.city,
-    address: address?.address,
-    workAddress: address?.workAddress,
-    instagram: address?.instagram,
-    facebook: address?.facebook,
-    snapChat: address?.snapChat,
-    birthDay: address?.birthDay,
-  });
+  const [updatedAddress, setUpdatedAddress] = useState({});
+
+  useEffect(() => {
+    setUpdatedAddress({ ...address });
+  }, [address]);
 
   const onChangeInput = (e) => {
     setUpdatedAddress((updatedAddress) => {
       return { ...updatedAddress, [e.target.name]: e.target.value };
     });
+  };
+
+  const onSaveClick = () => {
+    if (
+      updatedAddress.name !== "" &&
+      updatedAddress.surname !== "" &&
+      updatedAddress.email !== "" &&
+      updatedAddress.phoneNumber !== "" &&
+      updatedAddress.gender !== ""
+    ) {
+      let newAddresses = addresses.map((x) => {
+        if (x.id == updatedAddress.id) {
+          const newAddress = { ...updatedAddress };
+          return newAddress;
+        }
+        return x;
+      });
+
+      setAddresses(newAddresses);
+      setShowEdit(false);
+      alert("basariyla kaydedildi!");
+    } else {
+      alert("bos alan birakilamaz!");
+    }
   };
 
   return (
@@ -42,6 +61,7 @@ const Update = (props) => {
             <Form.Control
               onChange={(e) => onChangeInput(e)}
               name="name"
+              value={updatedAddress.name || ""}
               type="text"
             />
           </Form.Group>
@@ -49,13 +69,18 @@ const Update = (props) => {
             <Form.Label>Surname</Form.Label>
             <Form.Control
               onChange={(e) => onChangeInput(e)}
+              value={updatedAddress.surname || ""}
               name="surname"
               type="text"
             />
           </Form.Group>
           <Form.Group className="mb-3 ">
             <Form.Label>Gender</Form.Label>
-            <Form.Select name="gender" onChange={(e) => onChangeInput(e)}>
+            <Form.Select
+              name="gender"
+              value={updatedAddress.gender || ""}
+              onChange={(e) => onChangeInput(e)}
+            >
               <option>gender..</option>
               <option value="erkek">Erkek</option>
               <option value="kadin">Kadin</option>
@@ -65,6 +90,7 @@ const Update = (props) => {
           <Form.Group className="mb-3 ">
             <Form.Label>Email</Form.Label>
             <Form.Control
+              value={updatedAddress.email || ""}
               onChange={(e) => onChangeInput(e)}
               name="email"
               type="email"
@@ -73,6 +99,7 @@ const Update = (props) => {
           <Form.Group className="mb-3 ">
             <Form.Label>Phone Number</Form.Label>
             <Form.Control
+              value={updatedAddress.phoneNumber || ""}
               onChange={(e) => onChangeInput(e)}
               name="phoneNumber"
               type="text"
@@ -81,6 +108,7 @@ const Update = (props) => {
           <Form.Group className="mb-3 ">
             <Form.Label>Home Phone</Form.Label>
             <Form.Control
+              value={updatedAddress.homePhone || ""}
               onChange={(e) => onChangeInput(e)}
               name="homePhone"
               type="text"
@@ -89,6 +117,7 @@ const Update = (props) => {
           <Form.Group className="mb-3 ">
             <Form.Label>Work Phone</Form.Label>
             <Form.Control
+              value={updatedAddress.workPhone || ""}
               onChange={(e) => onChangeInput(e)}
               name="workPhone"
               type="text"
@@ -98,6 +127,7 @@ const Update = (props) => {
           <Form.Group className="mb-3 ">
             <Form.Label>City</Form.Label>
             <Form.Control
+              value={updatedAddress.city || ""}
               onChange={(e) => onChangeInput(e)}
               name="city"
               type="text"
@@ -107,6 +137,7 @@ const Update = (props) => {
           <Form.Group className="mb-3 ">
             <Form.Label>Address</Form.Label>
             <Form.Control
+              value={updatedAddress.address || ""}
               onChange={(e) => onChangeInput(e)}
               name="address"
               type="text"
@@ -116,6 +147,7 @@ const Update = (props) => {
           <Form.Group className="mb-3 ">
             <Form.Label>Work Address</Form.Label>
             <Form.Control
+              value={updatedAddress.workAddress || ""}
               onChange={(e) => onChangeInput(e)}
               name="workAddress"
               type="text"
@@ -125,6 +157,7 @@ const Update = (props) => {
           <Form.Group className="mb-3 ">
             <Form.Label>Instagram</Form.Label>
             <Form.Control
+              value={updatedAddress.instagram || ""}
               onChange={(e) => onChangeInput(e)}
               name="instagram"
               type="text"
@@ -134,6 +167,7 @@ const Update = (props) => {
           <Form.Group className="mb-3 ">
             <Form.Label>Facebook</Form.Label>
             <Form.Control
+              value={updatedAddress.facebook || ""}
               onChange={(e) => onChangeInput(e)}
               name="facebook"
               type="text"
@@ -143,6 +177,7 @@ const Update = (props) => {
           <Form.Group className="mb-3 ">
             <Form.Label>SnapChat</Form.Label>
             <Form.Control
+              value={updatedAddress.snapChat || ""}
               onChange={(e) => onChangeInput(e)}
               name="snapChat"
               type="text"
@@ -152,6 +187,7 @@ const Update = (props) => {
           <Form.Group className="mb-3 ">
             <Form.Label>BirthDay</Form.Label>
             <Form.Control
+              value={updatedAddress.birthDay || ""}
               onChange={(e) => onChangeInput(e)}
               name="birthDay"
               type="date"
@@ -160,10 +196,10 @@ const Update = (props) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="danger" onClick={handleDelete}>
+        <Button variant="danger" onClick={onDeleteClick}>
           Delete
         </Button>
-        <Button variant="primary" onClick={handleSave}>
+        <Button variant="primary" onClick={onSaveClick}>
           Save Changes
         </Button>
       </Modal.Footer>
