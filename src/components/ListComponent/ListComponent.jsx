@@ -21,8 +21,10 @@ const ListComponent = (props) => {
   };
 
   const onDeleteClick = (val) => {
+    //id si farkli olani sil filter ile
     const newAddresses = addresses.filter((x) => x.id !== val.id);
     setAddresses(newAddresses);
+    setShowEdit(false);
   };
 
   return (
