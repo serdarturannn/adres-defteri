@@ -15,7 +15,7 @@ const Update = (props) => {
 
   useEffect(() => {
     setUpdatedAddress({ ...address });
-  }, [address]);
+  }, [address]);  
 
   const onChangeInput = (e) => {
     setUpdatedAddress((updatedAddress) => {
